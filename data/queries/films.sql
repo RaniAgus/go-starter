@@ -6,6 +6,13 @@ WHERE id = $1 LIMIT 1;
 SELECT * FROM films
 ORDER BY title;
 
+-- name: CreateFilms :copyfrom
+INSERT INTO films (
+  title, director
+) VALUES (
+  $1, $2
+);
+
 -- name: CreateFilm :one
 INSERT INTO films (
   title, director
