@@ -14,6 +14,9 @@ func NewRouter(h web.Handler) *chi.Mux {
 
 	r.Use(middleware.Logger)
 	r.Get("/", route(h.GetHome, h.HandlePageError))
+	r.Get("/", route(h.GetHome, h.HandlePageError))
+	r.Get("/films", route(h.GetFilms, h.HandlePageError))
+	r.Post("/films", route(h.PostFilm, h.HandlePageError))
 	r.Handle("/static/*", http.StripPrefix("/static/", fs))
 	r.NotFound(route(h.NotFound, h.HandlePageError))
 

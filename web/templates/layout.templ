@@ -1,5 +1,9 @@
 package templates
 
+import (
+  "slices"
+)
+
 templ Base(title string) {
   <html>
   <head>
@@ -9,8 +13,28 @@ templ Base(title string) {
     <script src="/static/js/htmx.min.js"></script>
     <title>{title}</title>
   </head>
-  <body>
+  <body class="container mx-auto px-4 mt-4">
     {children...}
   </body>
   </html>
+}
+
+templ TextInput(label string, name string, placeholder string, value string, errorMsg string, errors []string) {
+  <div class="flex flex-col mb-4">
+    <label class="mb-2 font-bold text-sm text-grey-darkest" for={name}>{label}</label>
+    <input
+      class={"border py-2 px-3 text-grey-darkest", templ.KV("border-red-500", slices.Contains(errors, name))}
+      type="text"
+      name={name}
+      placeholder={placeholder}
+      value={value}
+    />
+    if (slices.Contains(errors, name)) {
+      <p class="text-red-500 text-xs italic">{errorMsg}</p>
+    }
+  </div>
+}
+
+templ SubmitButton(label string) {
+  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">{label}</button>
 }

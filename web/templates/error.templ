@@ -2,7 +2,12 @@ package templates
 
 templ ShowErrorPage(message string) {
   @Base("Error") {
-    <h1>Oops!</h1>
-    <p>{message}. <a href="/">Go to home.</a></p>
+    <h1 class="text-3xl font-bold underline mb-4">Oops!</h1>
+    <p>
+      {message}.
+      <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="/">
+      Go to home.
+      </a>
+    </p>
   }
 }

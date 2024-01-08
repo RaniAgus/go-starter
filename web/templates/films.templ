@@ -1,0 +1,54 @@
+package templates
+
+import (
+  "strings"
+
+  "github.com/RaniAgus/go-starter/data/sqlc"
+)
+
+type NewFilmForm struct {
+  Title    string   `json:"title"    validate:"required,alphanum"`
+  Director []string `json:"director" validate:"dive,required,alpha"`
+}
+
+templ ShowFilms(films []sqlc.Film) {
+  @Base("Films") {
+    <h1 class="text-3xl font-bold underline mb-4">
+      Films
+    </h1>
+    <ul class="list-disc" id="film-list">
+      for _, film := range films {
+        @ShowFilm(film)
+      }
+    </ul>
+    <span id="adding-film" class="htmx-indicator">Adding film...</span>
+    @ShowNewFilmForm(NewFilmForm{}, []string{})
+  }
+}
+
+templ SwapNewFilm(film sqlc.Film) {
+  <div hx-swap-oob="beforeend:#film-list">
+    @ShowFilm(film, true)
+  </div>
+  @ShowNewFilmForm(NewFilmForm{}, []string{})
+}
+
+templ ShowFilm(film sqlc.Film, swap ...bool) {
+  <li>
+    <b>{film.Title}</b> by {film.Director}
+  </li>
+}
+
+templ ShowNewFilmForm(form NewFilmForm, errors []string) {
+  <form
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    hx-post="/films"
+    hx-indicator="#adding-film"
+    hx-swap="outerHTML"
+  >
+    <h2 class="text-xl font-bold mb-2">Add a film</h2>
+    @TextInput("Title", "title", "Film", form.Title, "Title must not contain special characters or symbols", errors)
+    @TextInput("Director", "director", "Firstname Lastname", strings.Join(form.Director, " "), "Director must contain letters only", errors)
+    @SubmitButton("Add Film")
+  </form>
+}
