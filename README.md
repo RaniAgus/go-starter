@@ -11,7 +11,7 @@ Golang starter project.
 - [chi](https://go-chi.io/) for routing
 - [validator](https://pkg.go.dev/github.com/go-playground/validator/v10) for validating input data
 - [templ](https://templ.guide/) as a template engine
-- [merakiui](https://merakiui.com/) for styling with [tailwindcss](https://tailwindcss.com/) components
+- [picocss](https://picocss.com/) as a CSS framework
 
 
 ## Install dev dependencies

@@ -3,6 +3,5 @@
 bin/
 internal/sql/
 *_templ.go
-*.min.css
 .env
 __debug*

@@ -7,10 +7,6 @@ RUN go install github.com/go-task/task/v3/cmd/task@latest \
  && go install github.com/pressly/goose/v3/cmd/goose@latest \
  && go install github.com/a-h/templ/cmd/templ@latest
 
-ADD https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 /usr/local/bin/tailwindcss
-
-RUN chmod +x /usr/local/bin/tailwindcss
-
 WORKDIR /app
 
 COPY go.mod go.sum ./
