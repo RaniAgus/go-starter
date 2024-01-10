@@ -20,7 +20,12 @@ type Handler struct {
 type HandlerFunc func(w http.ResponseWriter, r *http.Request) error
 
 func (h Handler) GetHome(w http.ResponseWriter, r *http.Request) error {
-	return templates.ShowHome().Render(r.Context(), w)
+	v, err := h.Queries.GetLatestVersion(r.Context())
+	if err != nil {
+		return err
+	}
+
+	return templates.ShowHome(v.Version).Render(r.Context(), w)
 }
 
 func (h Handler) NotFound(w http.ResponseWriter, r *http.Request) error {
@@ -33,7 +38,7 @@ func (h Handler) NotFound(w http.ResponseWriter, r *http.Request) error {
 type ErrorHandlerFunc func(w http.ResponseWriter, r *http.Request, err error)
 
 func (h Handler) HandlePageError(w http.ResponseWriter, r *http.Request, err error) {
-	msg := ""
+	msg := "An error has occurred. Please try again later."
 	if apiError, ok := err.(util.APIError); ok {
 		msg = apiError.Message
 	} else {

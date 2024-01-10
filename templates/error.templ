@@ -5,9 +5,6 @@ templ ShowNotFoundPage() {
 }
 
 templ ShowErrorPage(message string) {
-	if len(message) == 0 {
-		msg = "An error has occurred. Please try again later."
-	}
 	@BaseErrorPage("Something went wrong", message)
 }
 
