@@ -54,8 +54,8 @@ tasks:
     run: when_changed
     sources:
       - templates/*.templ
-      - tailwind.config.js
-      - tailwind.css
+      - styles/tailwind.config.js
+      - styles/tailwind.css
     cmds:
       - npm run build --prefix styles
     generates:
